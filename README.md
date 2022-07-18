@@ -21,6 +21,8 @@ pip3 install numpy
 
 ## Running the Program:
 
+First `git pull` this repo somewhere on your computer.
+
 `cd` into the same folder as the .py file then run the following: 
 ```
 python3 predict_70_final.py
