@@ -1,38 +1,61 @@
 # CS70 Grade "Calculator"
-This program predicts the grade you need to score on the final when inputted your midterm score. 
+This program gives an statistical approximation for the standard deviation you need to score on the final if you want a specific grade given your midterm score. 
 
 Percentiles may vary slightly from semester to semester, so you want to score a little bit above the lower bound to be safe. Ideally, try to hit the median between the lower and upper bound.
 
-*Disclaimer: I'm not responsible if you fail to declare or if you cry about not getting the grade that the calculator said you would get. I made this for myself out of pure anxiety to give myself some semblance of certainty.*
+*Disclaimer: I'm not responsible if you fail to declare or if you end not getting the grade that the calculator said you would get. I made this for myself out of pure anxiety to give myself some semblance of certainty.*
 
-## Requirements
-1. Python 3
-2. Scipy module
-3. Numpy module
-
-Note: you may have to use pip instead of pip3
+## Requirements/Dependencies
+1. Python 3.8+
+2. Scipy
+3. Numpy
 
 ### Installation for Linux/MacOS users:
+
+`cd` into the `cs70-predict-final` folder you just installed and run the following:
 ```
-pip3 install python3
+pip3 install -r requirements.txt # if pip3 doesnt work try pip
+```
+
+If the above fails, you can manually run the commands yourself: 
+```
 pip3 install scipy
 pip3 install numpy
 ```
+#### Still running into issues?
+If you're still running into issues after installing the modules, double check to make sure that your Python version is up-to-date by typing `python3 –-version` into the terminal.
 
 ## Running the Program:
 
 `cd` into the same folder as the .py file then run the following: 
+
+*Calculate your expected letter grade using your Spring 2022 midterm and final score:*
 ```
-python3 predict_70_final.py
+python3 calc_overall_grade.py
 ```
 
-**Rudimentary predictor factoring in Corr(MT, Final)**
+*Predictor factoring in Corr(MT, Final) & Weights of MT & Final*
 ```
 python3 predict_70_corr.py
 ```
 
+*Unweighted Predictor*
+```
+python3 predict_70_final.py
+```
+
+### Which should I run?
+* `calc_overall_grade.py` calculates your overall weighted z-score **GIVEN your midterm and final raw scores** and maps it to a grade bin using Fall 2021's data.
+* `predict_with_corr.py` calculates the z-score you need to hit on the final to reach a certain letter grade **GIVEN just your midterm score**. Additionally, you can also run the unweighted predictor `predict_70_final.py`.
+
 ## How it works:
-You have two options:
+The predictor factors in the two-way 50%-clobbering policy and assumes everyone has 100% in all other categories besides exams, which according to course staff, buckets HW-Option students without homework i.e very similar to No-HW Option students. 
+* For HW-Option students: the reason we can make this assumption is because this "extreme case" where everyone gets full points on HW "is actually the norm for almost all students getting above a B-.  With the new 73% is enough policy for homework, this is even more true; 90% of the students whose final score was above the B range received essentially full points on the homework" (according to TA). It's also quite difficult to account for actual deviations but the difference is nearly negligible. 
+* Factors excluded: deviations within HW bins (i.e non-100%) and class-wide z-score shifting after clobbering.
+
+
+You have three options:
+
 * Option A: You want to get an "[desired grade]" and want to find out the final std range that you need score within to get [desired grade].
     * Output: (lower bound std, upper bound std) for [desired grade]
 
