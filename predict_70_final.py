@@ -7,9 +7,9 @@ Predicts final score while factoring in 50% two-way clobber policy for CS70
 """
 
 def mt1_zscore(raw_score):
-    # Updated 4/5/22
-    mean = 132.72
-    std = 39.01
+    # Updated 7/17/22
+    mean = 134.76
+    std = 36.93
     return (raw_score - mean)/std
 
 def avg_std(score1, score2):
