@@ -7,9 +7,9 @@ Predicts final score while factoring in 50% two-way clobber policy for CS70
 """
 
 def mt1_zscore(raw_score):
-    # Updated 4/5/22
-    mean = 132.72
-    std = 39.01
+    # Updated 7/17/22
+    mean = 134.76
+    std = 36.93
     return (raw_score - mean)/std
 
 def avg_std(score1, score2):
@@ -87,7 +87,7 @@ def predict_final_std_exact(desired_std, mt1_raw, should_print=True, show_all=Fa
     for final_std in np.arange(-3, 3, 0.001):
         clobber = avg_std(mt1_std, final_std)
         delta = 0.01
-        overall_std = round(avg_std(max(mt1_std, clobber)*.75, max(final_std, clobber)), 3)
+        overall_std = round(avg_std(max(mt1_std, clobber)*.75, final_std), 3)
 
         if abs(overall_std - desired_std) <= delta:
             overall_p = st.norm.cdf(overall_std) # converts to percentile in normalized distribution

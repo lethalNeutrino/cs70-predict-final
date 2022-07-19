@@ -44,9 +44,9 @@ def grade_to_z(grade):
         return [lower_z, upper_z]
 
 def mt1_zscore(raw_score):
-    # Updated 4/5/22
-    mean = 132.72
-    std = 39.01
+    # Updated 7/17/22
+    mean = 134.76
+    std = 36.93
     return (raw_score - mean)/std
 
 def avg_std(score1, score2):
@@ -76,7 +76,7 @@ def predict_final_std_exact(desired_percentile, z_score_MT):
         # overall_std = sqrt([0.375 * std_m]^2 + [0.5 * std_f]^2 + 2 * 0.8 * 0.375 * 0.5 * std_m * std_f)
         # Where std_m and std_f are 1 since normal dist.
         overall_std = np.sqrt(0.375**2 + 0.5**2 + 2 * 0.8 * 0.375 * 0.5)
-        percentile = NormalDist(mu=0, sigma=overall_std).cdf(0.375 * max(z_score_MT, clobber) + 0.5 * max(z_score_F, clobber)) 
+        percentile = NormalDist(mu=0, sigma=overall_std).cdf(0.375 * max(z_score_MT, clobber) + 0.5 * z_score_F) 
         
         if abs(percentile - desired_percentile) <= delta:
             return np.round(z_score_F, 2)
